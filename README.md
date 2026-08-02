@@ -1,1 +1,0 @@
-# s-aduk.github.io
