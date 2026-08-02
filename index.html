@@ -17,6 +17,34 @@
       --text: #E8EDF5;
       --muted: #6B7A8F;
       --card: rgba(255,255,255,0.03);
+      --nav-bg: rgba(8,11,16,0.85);
+      --overlay-border: rgba(255,255,255,0.15);
+      --overlay-bg: rgba(255,255,255,0.04);
+      --overlay-border-hover: rgba(255,255,255,0.35);
+      --overlay-bg-hover: rgba(255,255,255,0.08);
+      --shadow-soft: rgba(0,0,0,0.5);
+      --shadow-soft2: rgba(0,0,0,0.3);
+      --shadow-soft3: rgba(0,0,0,0.4);
+      --noise-opacity: 0.4;
+    }
+
+    [data-theme="light"] {
+      --bg: #F7F8FA;
+      --bg2: #FFFFFF;
+      --bg3: #EEF1F5;
+      --border: rgba(15,23,32,0.09);
+      --text: #101720;
+      --muted: #5B6472;
+      --card: rgba(15,23,32,0.03);
+      --nav-bg: rgba(247,248,250,0.85);
+      --overlay-border: rgba(15,23,32,0.12);
+      --overlay-bg: rgba(15,23,32,0.03);
+      --overlay-border-hover: rgba(15,23,32,0.28);
+      --overlay-bg-hover: rgba(15,23,32,0.06);
+      --shadow-soft: rgba(15,23,32,0.12);
+      --shadow-soft2: rgba(15,23,32,0.08);
+      --shadow-soft3: rgba(15,23,32,0.1);
+      --noise-opacity: 0.15;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,6 +58,7 @@
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* NOISE TEXTURE */
@@ -40,7 +69,7 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 0;
-      opacity: 0.4;
+      opacity: var(--noise-opacity);
     }
 
     /* GRID LINES */
@@ -65,9 +94,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 20px 60px;
-      background: rgba(8,11,16,0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease;
     }
 
     .nav-logo {
@@ -95,6 +125,35 @@
     }
 
     .nav-links a:hover { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: block; }
 
     /* HERO */
     .hero {
@@ -144,7 +203,7 @@
       border: 2px solid rgba(0,212,255,0.15);
       box-shadow: 
         0 0 60px rgba(0,212,255,0.1), 
-        0 40px 80px rgba(0,0,0,0.5);
+        0 40px 80px var(--shadow-soft);
       position: relative;
       z-index: 1;
    }
@@ -501,7 +560,7 @@
     .skill-card:hover {
       border-color: rgba(0,212,255,0.2);
       transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 40px var(--shadow-soft2);
     }
 
     .skill-card:hover::before { opacity: 1; }
@@ -700,7 +759,7 @@
     .project-card:hover:not(.coming-soon) {
       border-color: rgba(0,212,255,0.2);
       transform: translateY(-4px);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+      box-shadow: 0 24px 48px var(--shadow-soft3);
     }
 
     .project-num {
@@ -772,6 +831,21 @@
       background: linear-gradient(135deg, transparent 30%, rgba(0,212,255,0.05));
     }
 
+    .project-shot {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    .project-card.featured .project-shot {
+      height: 100%;
+      min-height: 280px;
+    }
+
     /* PROJECT LINKS */
     .project-links {
       display: flex;
@@ -806,14 +880,14 @@
     }
 
     .project-link-btn.outline {
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid var(--overlay-border);
       color: var(--text);
-      background: rgba(255,255,255,0.04);
+      background: var(--overlay-bg);
     }
 
     .project-link-btn.outline:hover {
-      border-color: rgba(255,255,255,0.35);
-      background: rgba(255,255,255,0.08);
+      border-color: var(--overlay-border-hover);
+      background: var(--overlay-bg-hover);
       transform: translateY(-2px);
     }
 
@@ -1019,13 +1093,19 @@
   <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">SAK.</a>
-    <ul class="nav-links">
-      <li><a href="#about">about</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#experience">experience</a></li>
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#contact">contact</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme">
+        <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -1302,12 +1382,13 @@
             </a>
           </div>
         </div>
-        <div class="project-visual">💊</div>
+        <img src="medifind-ss.png" alt="MediFind — real-time pharmacy medicine availability finder" class="project-shot">
       </div>
 
       <!-- SENTRYNODE FRAUD ENGINE -->
       <div class="project-card reveal">
         <div class="project-num">02</div>
+        <img src="sentrynode-ss.png" alt="SentryNode Fraud Engine monitoring dashboard" class="project-shot" style="margin-bottom:20px;">
         <div class="project-badge grade-a">⚡ SERVERLESS MVP</div>
         <div class="project-title">SentryNode Fraud Engine</div>
         <p class="project-desc">An event-driven, serverless transaction monitoring and real-time fraud detection engine. Built with AWS SAM — API Gateway, SQS, Lambda, DynamoDB, and SNS — with a Next.js frontend, and least-privilege IAM as the active next step.</p>
@@ -1330,6 +1411,7 @@
       <!-- UBUNTU SMART CAFE -->
       <div class="project-card reveal">
         <div class="project-num">03</div>
+        <img src="ubuntu-smart-cafe-ss.png" alt="Ubuntu Café & Lounge Smart Café homepage" class="project-shot" style="margin-bottom:20px; object-position: center 20%;">
         <div class="project-badge grade-a">⚡ SERVERLESS · TEAM PROJECT</div>
         <div class="project-title">Ubuntu Café & Lounge Smart Café</div>
         <p class="project-desc">A serverless, full-stack Smart Café platform built with Next.js 14 (App Router) and Tailwind CSS on the frontend, and AWS Lambda, API Gateway, DynamoDB, and SES on the backend. Built and presented as a group project.</p>
@@ -1351,6 +1433,7 @@
       <!-- DEFI PROJECT: DEMOTED, STILL SHOWN -->
       <div class="project-card reveal">
         <div class="project-num">04</div>
+        <img src="ai-finance-ss.png" alt="AI-Integrated DeFi Web Application dashboard" class="project-shot" style="margin-bottom:20px;">
         <div class="project-badge grade-a">★ GRADE A — FINAL YEAR PROJECT</div>
         <div class="project-title">AI-Integrated DeFi Web Application</div>
         <p class="project-desc">An earlier full-stack decentralised finance project combining React, smart contracts, and AI-driven financial decision-making.</p>
@@ -1433,6 +1516,26 @@
   </footer>
 
   <script>
+    // Theme toggle (dark default, persisted in localStorage)
+    (function() {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const stored = localStorage.getItem('theme');
+      const initial = stored || 'dark';
+      if (initial === 'light') root.setAttribute('data-theme', 'light');
+
+      toggle.addEventListener('click', () => {
+        const isLight = root.getAttribute('data-theme') === 'light';
+        if (isLight) {
+          root.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          root.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    })();
+
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
